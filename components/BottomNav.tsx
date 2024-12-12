@@ -43,7 +43,8 @@ export default function BottomNav() {
             <Link
               href={item.path}
               className={`flex-1 py-2 flex flex-col items-center justify-center ${
-                pathname === item.path
+                pathname === item.path ||
+                (item.path !== "/" && pathname?.startsWith(item.path))
                   ? "text-primary bg-gray-100"
                   : "text-gray-600"
               }`}
