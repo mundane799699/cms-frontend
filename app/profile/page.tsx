@@ -8,7 +8,7 @@ import Image from "next/image";
 const Profile = () => {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
@@ -29,6 +29,14 @@ const Profile = () => {
         setLoading(false);
       });
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <h1 className="text-4xl">加载中...</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center min-h-screen p-8 bg-gray-100">
