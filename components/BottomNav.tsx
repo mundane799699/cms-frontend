@@ -12,22 +12,22 @@ import {
 const navItems = [
   {
     name: "破茧",
-    path: "/",
+    paths: ["/", "/history"],
     icon: <PiButterfly className="w-6 h-6 mb-1" />,
   },
   {
     name: "思考",
-    path: "/think",
+    paths: ["/think"],
     icon: <PiLightbulb className="w-6 h-6 mb-1" />,
   },
   {
     name: "陪跑",
-    path: "/run",
+    paths: ["/run"],
     icon: <PiLightningBold className="w-6 h-6 mb-1" />,
   },
   {
     name: "我的",
-    path: "/profile",
+    paths: ["/profile", "/profile/login"],
     icon: <PiUserCircle className="w-6 h-6 mb-1" />,
   },
 ];
@@ -39,12 +39,11 @@ export default function BottomNav() {
     <nav className="fixed bottom-0 w-full bg-white border-t">
       <div className="flex justify-between">
         {navItems.map((item) => (
-          <div key={item.path} className="flex flex-1">
+          <div key={item.paths[0]} className="flex flex-1">
             <Link
-              href={item.path}
+              href={item.paths[0]}
               className={`flex-1 py-2 flex flex-col items-center justify-center ${
-                pathname === item.path ||
-                (item.path !== "/" && pathname?.startsWith(item.path))
+                item.paths.includes(pathname)
                   ? "text-primary bg-gray-100"
                   : "text-gray-600"
               }`}

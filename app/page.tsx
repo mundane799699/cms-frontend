@@ -4,6 +4,8 @@ import { getKeyword } from "@/services/keyword";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { BsChatDots } from "react-icons/bs";
+import dayjs from "dayjs";
+import Link from "next/link";
 
 export default function Home() {
   const [keyword, setKeyword] = useState({
@@ -24,8 +26,14 @@ export default function Home() {
   return (
     <div className="min-h-screen p-8">
       <div className="flex justify-between items-center">
-        <div className="text-lg">{keyword.publishDate}</div>
-        <div className="bg-gray-200 px-4 py-1 rounded">历史记录</div>
+        <div className="text-lg">
+          {keyword.publishDate
+            ? dayjs(keyword.publishDate).format("YYYY年MM月DD日")
+            : ""}
+        </div>
+        <Link href="/history" className="bg-gray-200 px-4 py-1 rounded">
+          历史记录
+        </Link>
       </div>
 
       <div className="flex justify-center items-center mt-32">
