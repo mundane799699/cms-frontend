@@ -5,5 +5,5 @@ export const getKeyword = () => {
 };
 
 export const getHistory = () => {
-  return apiClient.get("/system/keywords/list");
+  return apiClient.get("/system/keywords/history");
 };

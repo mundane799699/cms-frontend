@@ -13,10 +13,11 @@ const HistoryPage = () => {
 
   useEffect(() => {
     getHistory().then((res: any) => {
-      if (res.code === 200) {
-        setHistory(res.rows);
+      const { code, data, msg } = res;
+      if (code === 200) {
+        setHistory(data);
       } else {
-        console.error(res.msg);
+        console.error(msg);
       }
     });
   }, []);
