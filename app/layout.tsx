@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <body className="antialiased flex flex-col min-h-screen">
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 pb-16">{children}</main>
         <BottomNav />
       </body>
     </html>
