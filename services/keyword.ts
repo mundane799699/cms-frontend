@@ -13,15 +13,17 @@ export const getKeywordComment = (keywordId: number) => {
 };
 
 export const postKeywordComment = (
-  keywordId: number,
+  keywordId: number | null,
   content: string,
   userId: number,
-  parentId: number | null
+  parentId: number | null,
+  replyUserId: number | null
 ) => {
   return apiClient.post(`/system/comment`, {
     keywordId,
     content,
     userId,
     parentId,
+    replyUserId,
   });
 };
