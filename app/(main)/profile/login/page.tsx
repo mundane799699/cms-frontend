@@ -30,13 +30,15 @@ const LoginPage = () => {
 
     try {
       const res = (await login(formData)) as any;
-      if (res.code === 200) {
+      const { code, token, msg } = res;
+      if (code === 200) {
         // Store the token if needed
-        setToken(res.token);
+        setToken(token);
         toast.success("登录成功");
         router.push("/profile");
       } else {
-        toast.success(res.msg || "登录失败，请检查用户名或密码");
+        // console.error(msg);
+        toast.error(msg || "登录失败，请检查用户名或密码");
       }
     } catch (err: any) {
       setError(err.message || "登录失败，请重试");

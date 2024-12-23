@@ -27,3 +27,7 @@ export const postKeywordComment = (
     replyUserId,
   });
 };
+
+export const getKeywordDetail = (keywordId: number) => {
+  return apiClient.get(`/system/keywords/getDetail/${keywordId}`);
+};

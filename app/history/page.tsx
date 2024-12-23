@@ -39,6 +39,7 @@ const HistoryPage = () => {
           return (
             <div
               key={item.id}
+              onClick={() => router.push(`/keyword/${item.id}`)}
               className="flex justify-between p-4 border-b hover:bg-gray-100"
             >
               <div>{dayjs(item.publishDate).format("YYYY年MM月DD日")}</div>
