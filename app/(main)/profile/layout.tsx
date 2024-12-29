@@ -3,5 +3,5 @@ export default function ProfileLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="flex flex-col min-h-screen">{children}</div>;
+  return <div className="flex flex-col h-full">{children}</div>;
 }

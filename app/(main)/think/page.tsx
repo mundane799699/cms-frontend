@@ -37,7 +37,7 @@ const Think = () => {
   }
 
   return (
-    <div className="flex flex-col p-4 h-[calc(100vh-64px)] overflow-y-auto">
+    <div className="flex flex-col p-4 h-full overflow-y-auto">
       <div
         className="text-gray-600 bg-gray-100 p-4 rounded-lg cursor-pointer"
         onClick={() => {

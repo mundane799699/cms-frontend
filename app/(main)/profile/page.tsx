@@ -39,7 +39,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-8 bg-gray-100">
+    <div className="flex flex-col items-center h-full p-8 bg-gray-100">
       {/* 头像和用户名部分 */}
       <div className="flex flex-col items-center mb-8">
         <div className="w-20 h-20 rounded-full overflow-hidden mb-4">

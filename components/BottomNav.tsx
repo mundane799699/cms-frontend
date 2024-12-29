@@ -36,7 +36,7 @@ export default function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 w-full bg-white border-t">
+    <nav className="w-full bg-white border-t">
       <div className="flex justify-between">
         {navItems.map((item) => (
           <div key={item.paths[0]} className="flex flex-1">

@@ -87,7 +87,7 @@ export default function Home() {
   };
 
   return (
-    <div className="h-[calc(100vh-64px)] overflow-y-auto p-8">
+    <div className="overflow-y-auto p-8">
       <div className="flex justify-between items-center">
         <div className="text-lg">
           {keyword.publishDate
