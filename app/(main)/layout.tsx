@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-full flex flex-col">
       <main className="flex-1">{children}</main>
       <BottomNav />
     </div>
