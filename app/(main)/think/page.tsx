@@ -45,7 +45,7 @@ const Think = () => {
         }}
       >
         <div className="mb-4">
-          {dayjs(currentArticle.createTime).format("YYYY年MM月DD日")}
+          {dayjs(currentArticle.publishDate).format("YYYY年MM月DD日")}
         </div>
         {currentArticle.coverImage && (
           <div className="relative w-full h-48 mb-4">

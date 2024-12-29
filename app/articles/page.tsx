@@ -39,7 +39,7 @@ export default function AllArticles() {
             onClick={() => router.push(`/articles/${article.id}`)}
           >
             <div className="mb-4">
-              {dayjs(article.createTime).format("YYYY年MM月DD日")}
+              {dayjs(article.publishDate).format("YYYY年MM月DD日")}
             </div>
             {article.coverImage && (
               <div className="relative w-full h-48 mb-4">
