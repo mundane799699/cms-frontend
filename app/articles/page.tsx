@@ -21,7 +21,7 @@ export default function AllArticles() {
   }, []);
 
   return (
-    <div className="h-screen bg-white">
+    <div className="h-full bg-white">
       <div className="fixed top-0 left-0 w-full p-4 bg-white border-b z-10">
         <button
           onClick={() => router.back()}
