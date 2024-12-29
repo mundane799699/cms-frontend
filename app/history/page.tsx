@@ -23,7 +23,7 @@ const HistoryPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="h-full bg-white overflow-y-auto">
       <div className="fixed top-0 left-0 w-full p-4 bg-white border-b">
         <button
           onClick={() => router.back()}
