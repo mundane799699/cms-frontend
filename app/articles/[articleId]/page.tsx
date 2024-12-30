@@ -16,6 +16,7 @@ interface Article {
   viewCount: number;
   likeCount: number;
   commentCount: number;
+  publishDate: string;
 }
 
 const ArticlePage = () => {
@@ -68,7 +69,7 @@ const ArticlePage = () => {
       <div className="pt-16 px-4 pb-4">
         <h1 className="text-2xl font-bold mb-4">{article.title}</h1>
         <div className="text-sm text-gray-500 mb-4 flex items-center space-x-4">
-          <span>{dayjs(article.createTime).format("YYYY年MM月DD日")}</span>
+          <span>{dayjs(article.publishDate).format("YYYY年MM月DD日")}</span>
           <span>阅读 {article.viewCount}</span>
           <span>点赞 {article.likeCount}</span>
           <span>评论 {article.commentCount}</span>
