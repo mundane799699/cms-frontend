@@ -16,7 +16,7 @@ const Think = () => {
 
   useEffect(() => {
     if (articles.length === 0) {
-      getArticleList().then((res: any) => {
+      getArticleList(null).then((res: any) => {
         const { data, code } = res;
         if (code === 200) {
           setArticles(data);
@@ -69,7 +69,7 @@ const Think = () => {
             if (currentIndex > 0) {
               setCurrentArticle(articles[currentIndex - 1]);
             } else {
-              toast("✨ 已经是第一篇文章啦 ~");
+              toast("✨ 已经是第一篇文章啦 ~", { duration: 1000 });
             }
           }}
         >
@@ -94,7 +94,7 @@ const Think = () => {
             if (currentIndex < articles.length - 1) {
               setCurrentArticle(articles[currentIndex + 1]);
             } else {
-              toast("🌟 已经是最后一篇文章啦 ~");
+              toast("🌟 已经是最后一篇文章啦 ~", { duration: 1000 });
             }
           }}
         >
