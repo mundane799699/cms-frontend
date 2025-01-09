@@ -2,17 +2,18 @@
 import { useParams, useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import { getProjectArticleList } from "@/services/projectArticle";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { ProjectArticle } from "@/types/projectArticle";
 const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
 
-const ProjectArticles = () => {
+const ProjectArticleContent = () => {
   const searchParams = useSearchParams();
   const projectId = searchParams.get("projectId");
   const router = useRouter();
   const [articleList, setArticleList] = useState<ProjectArticle[]>([]);
+  
   useEffect(() => {
     getProjectArticleList(Number(projectId)).then((res: any) => {
       const { code, data, msg } = res;
@@ -22,7 +23,7 @@ const ProjectArticles = () => {
         console.error(msg);
       }
     });
-  }, []);
+  }, [projectId]);
 
   const handleClick = (id: number) => {
     router.push(`/projectArticles/${id}`);
@@ -65,6 +66,14 @@ const ProjectArticles = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const ProjectArticles = () => {
+  return (
+    <Suspense fallback={<div>加载中...</div>}>
+      <ProjectArticleContent />
+    </Suspense>
   );
 };
 
