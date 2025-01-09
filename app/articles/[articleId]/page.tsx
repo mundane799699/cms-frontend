@@ -6,18 +6,8 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useState } from "react";
 import dayjs from "dayjs";
+import { Article } from "@/types/article";
 
-interface Article {
-  id: number;
-  title: string;
-  coverImage: string;
-  content: string;
-  createTime: string;
-  viewCount: number;
-  likeCount: number;
-  commentCount: number;
-  publishDate: string;
-}
 
 const ArticlePage = () => {
   const { articleId } = useParams();
