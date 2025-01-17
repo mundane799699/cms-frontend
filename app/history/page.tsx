@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { History } from "@/types/HistoryType";
 import dayjs from "dayjs";
+import { NavigationHeader } from "@/components/NavigationHeader";
 
 const HistoryPage = () => {
   const router = useRouter();
@@ -24,15 +25,7 @@ const HistoryPage = () => {
 
   return (
     <div className="h-full bg-white overflow-y-auto">
-      <div className="fixed top-0 left-0 w-full p-4 bg-white border-b">
-        <button
-          onClick={() => router.back()}
-          className="flex items-center text-gray-600"
-        >
-          <ChevronLeft size={24} />
-          <span className="ml-1">返回</span>
-        </button>
-      </div>
+      <NavigationHeader />
 
       <div className="pt-16">
         {history.map((item) => {

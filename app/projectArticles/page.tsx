@@ -7,13 +7,14 @@ import { ProjectArticle } from "@/types/projectArticle";
 const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
+import { NavigationHeader } from "@/components/NavigationHeader";
 
 const ProjectArticleContent = () => {
   const searchParams = useSearchParams();
   const projectId = searchParams.get("projectId");
   const router = useRouter();
   const [articleList, setArticleList] = useState<ProjectArticle[]>([]);
-  
+
   useEffect(() => {
     getProjectArticleList(Number(projectId)).then((res: any) => {
       const { code, data, msg } = res;
@@ -31,15 +32,7 @@ const ProjectArticleContent = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="fixed top-0 left-0 w-full p-4 bg-white border-b">
-        <button
-          onClick={() => router.back()}
-          className="flex items-center text-gray-600"
-        >
-          <ChevronLeft size={24} />
-          <span className="ml-1">返回</span>
-        </button>
-      </div>
+      <NavigationHeader />
       <div className="pt-16 px-4 pb-4">
         <div className="flex flex-col gap-4">
           {articleList.map((article) => (

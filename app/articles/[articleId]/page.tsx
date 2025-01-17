@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { Article } from "@/types/article";
+import { NavigationHeader } from "@/components/NavigationHeader";
 
 
 const ArticlePage = () => {
@@ -47,15 +48,7 @@ const ArticlePage = () => {
   }
   return (
     <div className="min-h-screen bg-white">
-      <div className="fixed top-0 left-0 w-full p-4 bg-white border-b">
-        <button
-          onClick={() => router.back()}
-          className="flex items-center text-gray-600"
-        >
-          <ChevronLeft size={24} />
-          <span className="ml-1">返回</span>
-        </button>
-      </div>
+      <NavigationHeader />
       <div className="pt-16 px-4 pb-4">
         <h1 className="text-2xl font-bold mb-4">{article.title}</h1>
         <div className="text-sm text-gray-500 mb-4 flex items-center space-x-4">

@@ -27,7 +27,7 @@ const navItems = [
   },
   {
     name: "我的",
-    paths: ["/profile", "/profile/login"],
+    paths: ["/profile", "/profile/login", "/profile/settings"],
     icon: <PiUserCircle className="w-6 h-6 mb-1" />,
   },
 ];
@@ -36,8 +36,8 @@ export default function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="w-full bg-white border-t">
-      <div className="flex justify-between">
+    <nav className="w-full bg-white border-t h-16 fixed bottom-0">
+      <div className="flex justify-between h-full">
         {navItems.map((item) => (
           <div key={item.paths[0]} className="flex flex-1">
             <Link

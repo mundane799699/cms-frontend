@@ -49,7 +49,7 @@ export default function AllArticles() {
 
   return (
     <div className="h-full bg-white">
-      <div className="flex justify-between items-center fixed top-0 left-0 w-full p-4 bg-white border-b z-10">
+      <div className="flex h-14 justify-between items-center fixed top-0 left-0 w-full p-4 bg-white border-b z-10">
         <button
           onClick={() => router.back()}
           className="flex items-center text-gray-600"

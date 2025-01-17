@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <div className="h-full flex flex-col">
-      <main className="flex-1 overflow-hidden">{children}</main>
+      <main className="flex-1 overflow-hidden mb-16">{children}</main>
       <BottomNav />
     </div>
   );

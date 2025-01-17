@@ -4,6 +4,7 @@ import { getInfo } from "@/services/login";
 import { useEffect, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 import Image from "next/image";
+import { Settings } from "lucide-react";
 
 const Profile = () => {
   const router = useRouter();
@@ -39,7 +40,15 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex flex-col items-center h-full p-8 bg-gray-100">
+    <div className="flex flex-col items-center h-full p-8 bg-gray-100 relative">
+      {/* 设置图标 */}
+      <Link
+        href="/profile/settings"
+        className="absolute top-4 right-4 text-gray-600 hover:text-gray-900"
+      >
+        <Settings size={24} />
+      </Link>
+
       {/* 头像和用户名部分 */}
       <div className="flex flex-col items-center mb-8">
         <div className="w-20 h-20 rounded-full overflow-hidden mb-4">
