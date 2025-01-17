@@ -11,3 +11,7 @@ export const login = (data: any) => {
 export const getInfo = () => {
   return apiClient.get("/getInfo");
 };
+
+export const logout = () => {
+  return apiClient.post("/logout");
+};
