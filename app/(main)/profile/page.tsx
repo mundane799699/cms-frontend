@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
 import { getInfo } from "@/services/login";
-import { updateDescription } from "@/services/profile";
+import { updateDescription, updateAvatar } from "@/services/profile";
 import { useEffect, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Settings } from "lucide-react";
+import toast from "react-hot-toast";
+const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 
 const Profile = () => {
   const router = useRouter();
@@ -67,14 +69,40 @@ const Profile = () => {
 
       {/* 头像和用户名部分 */}
       <div className="flex flex-col items-center mb-8">
-        <div className="w-20 h-20 rounded-full overflow-hidden mb-4">
-          <Image
-            src={user?.avatar || "/images/default_avatar.jpg"} // 替换为实际的猫咪头像图片路径
+        <div className="w-20 h-20 overflow-hidden mb-4 relative group rounded-md">
+          <img
+            src={
+              user?.avatar
+                ? `${baseImgUrl}${user?.avatar}`
+                : "/images/default_avatar.jpg"
+            }
             alt="用户头像"
-            width={80}
-            height={80}
-            className="object-cover"
+            className="w-20 h-20 object-cover"
           />
+          <label className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity">
+            <input
+              type="file"
+              className="hidden"
+              accept="image/*"
+              onChange={async (e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  try {
+                    const res = (await updateAvatar(file)) as any;
+                    if (res.code === 200) {
+                      setUser({ ...user, avatar: res.imgUrl });
+                    } else {
+                      toast("上传头像失败：" + res.msg);
+                    }
+                  } catch (error) {
+                    console.error("上传头像失败:", error);
+                    toast("上传头像失败，请稍后重试");
+                  }
+                }
+              }}
+            />
+            <span className="text-white">更换头像</span>
+          </label>
         </div>
         <h1 className="text-xl font-bold mb-2">{user?.nickName}</h1>
         {isEditing ? (
