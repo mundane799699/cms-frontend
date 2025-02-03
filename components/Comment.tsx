@@ -5,6 +5,7 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import { postKeywordComment } from "@/services/keyword";
 import { useUserInfo } from "@/hooks/useUserInfo";
+const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 
 export default function Comment({
   comment,
@@ -46,8 +47,8 @@ export default function Comment({
         {/* 用户头像 */}
         <div className="flex-shrink-0">
           {comment.userAvatar ? (
-            <Image
-              src={comment.userAvatar}
+            <img
+              src={`${baseImgUrl}${comment.userAvatar}`}
               alt={comment.userName}
               width={40}
               height={40}
@@ -91,8 +92,8 @@ export default function Comment({
                     {/* 用户头像 */}
                     <div className="flex-shrink-0">
                       {child.userAvatar ? (
-                        <Image
-                          src={child.userAvatar}
+                        <img
+                          src={`${baseImgUrl}${child.userAvatar}`}
                           alt={child.userName}
                           width={40}
                           height={40}

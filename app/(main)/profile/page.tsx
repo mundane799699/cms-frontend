@@ -150,7 +150,7 @@ const Profile = () => {
       {/* 收藏和发帖按钮 */}
       <div className="flex gap-4 w-full max-w-md">
         <Link
-          href="/profile/collections"
+          href="/favorites"
           className="flex-1 py-3 bg-gray-200 text-center rounded-md hover:bg-gray-300"
         >
           我的收藏

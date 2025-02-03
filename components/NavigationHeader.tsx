@@ -16,7 +16,7 @@ export const NavigationHeader = ({
 
   return (
     <div
-      className={`fixed h-14 top-0 left-0 w-full p-4 bg-white border-b ${className}`}
+      className={`fixed z-10 h-14 top-0 left-0 w-full p-4 bg-white border-b ${className}`}
     >
       <button
         onClick={() => router.back()}
