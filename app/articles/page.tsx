@@ -25,7 +25,7 @@ export default function AllArticles() {
   );
 
   useEffect(() => {
-    getArticleList(selectedCategoryId).then((res: any) => {
+    getArticleList(selectedCategoryId, null, 1).then((res: any) => {
       const { data, code, msg } = res;
       if (res.code === 200) {
         setArticles(data);

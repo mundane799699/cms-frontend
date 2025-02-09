@@ -16,7 +16,7 @@ const Think = () => {
 
   useEffect(() => {
     if (articles.length === 0) {
-      getArticleList(null).then((res: any) => {
+      getArticleList(null, null, 1).then((res: any) => {
         const { data, code } = res;
         if (code === 200) {
           setArticles(data);

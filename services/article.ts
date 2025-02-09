@@ -1,9 +1,15 @@
 import apiClient from "./apiClient";
 
-export const getArticleList = (categoryId: number | null) => {
+export const getArticleList = (
+  categoryId: number | null,
+  projectId: number | null,
+  type: number
+) => {
   return apiClient.get("/system/article/all", {
     params: {
       categoryId,
+      projectId,
+      type,
     },
   });
 };

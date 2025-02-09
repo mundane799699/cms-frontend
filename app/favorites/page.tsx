@@ -21,12 +21,8 @@ const FavoritesPage = () => {
   }, []);
 
   const handleClick = (article: any) => {
-    const { articleId, type } = article;
-    if (type === 1) {
-      router.push(`/articles/${articleId}`);
-    } else if (type === 2) {
-      router.push(`/projectArticles/${articleId}`);
-    }
+    const { articleId } = article;
+    router.push(`/articles/${articleId}`);
   };
 
   return (
