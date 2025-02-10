@@ -156,7 +156,13 @@ const Profile = () => {
           我的收藏
         </Link>
         <Link
-          href="/profile/posts"
+          href="/publish"
+          className="flex-1 py-3 bg-gray-200 text-center rounded-md hover:bg-gray-300"
+        >
+          发布文章
+        </Link>
+        <Link
+          href="/myPosts"
           className="flex-1 py-3 bg-gray-200 text-center rounded-md hover:bg-gray-300"
         >
           我的发帖

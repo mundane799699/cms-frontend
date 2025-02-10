@@ -6,12 +6,8 @@ import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronsUpDown } from "lucide-react";
 import { Listbox, Transition } from "@headlessui/react";
 import dayjs from "dayjs";
+import { Category } from "@/types/category";
 const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
-
-type Category = {
-  id: number;
-  categoryName: string;
-};
 
 export default function AllArticles() {
   const [articles, setArticles] = useState([]);
@@ -27,7 +23,7 @@ export default function AllArticles() {
   useEffect(() => {
     getArticleList(selectedCategoryId, null, 1).then((res: any) => {
       const { data, code, msg } = res;
-      if (res.code === 200) {
+      if (code === 200) {
         setArticles(data);
       }
     });
@@ -36,7 +32,7 @@ export default function AllArticles() {
   useEffect(() => {
     getArticleCategory().then((res: any) => {
       const { data, code, msg } = res;
-      if (res.code === 200) {
+      if (code === 200) {
         setCategories(data);
       }
     });
