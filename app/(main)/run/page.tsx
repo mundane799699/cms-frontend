@@ -23,7 +23,7 @@ const Run = () => {
     router.push(`/projectArticles?projectId=${id}`);
   };
   return (
-    <div className="flex flex-col p-6 h-full overflow-y-auto space-y-4">
+    <div className="flex flex-col p-6 h-full overflow-y-auto space-y-4 bg-gray-50">
       {projects.map((project) => (
         <div
           onClick={() => handleClick(project.id)}

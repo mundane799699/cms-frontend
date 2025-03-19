@@ -37,9 +37,9 @@ const Think = () => {
   }
 
   return (
-    <div className="flex flex-col p-4 h-full overflow-y-auto">
+    <div className="flex flex-col p-4 h-full overflow-y-auto bg-gray-50">
       <div
-        className="text-gray-600 bg-gray-100 p-4 rounded-lg cursor-pointer"
+        className="text-gray-600 bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100 cursor-pointer"
         onClick={() => {
           router.push(`/articles/${currentArticle.id}`);
         }}

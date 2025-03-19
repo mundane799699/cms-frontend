@@ -58,7 +58,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex flex-col items-center h-full p-8 bg-gray-100 relative">
+    <div className="flex flex-col items-center h-full p-8 bg-gray-50 relative">
       {/* 设置图标 */}
       <Link
         href="/profile/settings"

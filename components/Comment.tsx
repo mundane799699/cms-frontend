@@ -42,7 +42,7 @@ export default function Comment({
   };
 
   return (
-    <div className="bg-gray-50 p-4 rounded-lg">
+    <div className="p-4 rounded-lg">
       <div className="flex gap-3">
         {/* 用户头像 */}
         <div className="flex-shrink-0">
@@ -64,12 +64,14 @@ export default function Comment({
         </div>
 
         {/* 评论内容区域 */}
-        <div className="flex-1">
+        <div className="flex-1 min-w-0 overflow-hidden">
           <div className="flex justify-between items-center">
             <div className="font-medium text-gray-900">{comment.userName}</div>
           </div>
 
-          <div className="text-gray-700 mt-1">{comment.content}</div>
+          <div className="text-gray-700 mt-1 break-words whitespace-pre-wrap overflow-hidden">
+            {comment.content}
+          </div>
           <div className="flex gap-4 mt-1 items-center text-gray-500 text-xs">
             <div>{dayjs(comment.createTime).format("YYYY-MM-DD HH:mm")}</div>
             <button
@@ -87,7 +89,7 @@ export default function Comment({
           {comment.children && comment.children.length > 0 && (
             <div className="mt-2">
               {comment.children.map((child: any) => (
-                <div key={child.id} className="bg-gray-50 rounded-lg py-2">
+                <div key={child.id} className="rounded-lg py-2">
                   <div className="flex gap-3">
                     {/* 用户头像 */}
                     <div className="flex-shrink-0">
@@ -147,9 +149,9 @@ export default function Comment({
           )}
           {/* 添加回复框 */}
           {showReplyBox && (
-            <div className="mt-3">
+            <div className="mt-3 mx-1 px-1">
               <textarea
-                className="w-full p-2 border rounded-lg resize-none focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full p-2 border rounded-lg resize-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                 rows={3}
                 placeholder={`回复${replyUserName}：`}
                 value={replyContent}
