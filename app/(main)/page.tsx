@@ -95,7 +95,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="rounded-2xl overflow-y-auto mt-8 bg-white flex-1 flex flex-col">
+      <div className="rounded-2xl overflow-y-auto mt-8 bg-white flex-1 flex flex-col shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100">
         <div className="relative h-52 flex-shrink-0">
           <img
             src="/images/home_bg.jpg"
@@ -104,7 +104,9 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-black/30" />
           <div className="absolute bottom-0 right-0 text-white p-2">
-            {dayjs(keyword.publishDate).format("YYYY年MM月DD日")}
+            {keyword.publishDate
+              ? dayjs(keyword.publishDate).format("YYYY年MM月DD日")
+              : ""}
           </div>
         </div>
 
