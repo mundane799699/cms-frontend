@@ -8,15 +8,21 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useArticleStore } from "@/hooks/articleStore";
 import { useUserInfo } from "@/hooks/useUserInfo";
+import { BeatLoader } from "react-spinners";
 const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 
 const Think = () => {
   const router = useRouter();
   const { articles, currentArticle, setArticles, setCurrentArticle } =
     useArticleStore();
-  const { userInfo } = useUserInfo();
+  const { userInfo, initialized, initialize } = useUserInfo();
 
   useEffect(() => {
+    if (!initialized) {
+      initialize();
+      return;
+    }
+
     if (!userInfo) {
       router.push("/login");
       return;
@@ -32,12 +38,19 @@ const Think = () => {
         }
       });
     }
-  }, []);
+  }, [
+    initialized,
+    userInfo,
+    articles.length,
+    currentArticle,
+    initialize,
+    router,
+  ]);
 
   if (!currentArticle) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <h1 className="text-2xl">加载中...</h1>
+        <BeatLoader color="#3b82f6" size={10} />
       </div>
     );
   }

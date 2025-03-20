@@ -10,9 +10,14 @@ const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 const Run = () => {
   const router = useRouter();
   const [projects, setProjects] = useState<Project[]>([]);
-  const { userInfo } = useUserInfo();
+  const { userInfo, initialized, initialize } = useUserInfo();
 
   useEffect(() => {
+    if (!initialized) {
+      initialize();
+      return;
+    }
+
     if (!userInfo) {
       router.push("/login");
       return;
@@ -24,7 +29,7 @@ const Run = () => {
         setProjects(data);
       }
     });
-  }, []);
+  }, [initialized, userInfo]);
 
   const handleClick = (id: number) => {
     router.push(`/projectArticles?projectId=${id}`);

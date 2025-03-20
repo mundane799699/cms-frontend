@@ -10,15 +10,20 @@ import { useSearchParams } from "next/navigation";
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { getArticleList } from "@/services/article";
 import { useUserInfo } from "@/hooks/useUserInfo";
+import { BeatLoader } from "react-spinners";
 
 const ProjectArticleContent = () => {
   const searchParams = useSearchParams();
   const projectId = searchParams.get("projectId");
   const router = useRouter();
   const [articleList, setArticleList] = useState<ProjectArticle[]>([]);
-  const { userInfo } = useUserInfo();
+  const { userInfo, initialized, initialize } = useUserInfo();
 
   useEffect(() => {
+    if (!initialized) {
+      initialize();
+      return;
+    }
     if (!userInfo) {
       router.push("/login");
       return;
@@ -31,7 +36,7 @@ const ProjectArticleContent = () => {
         console.error(msg);
       }
     });
-  }, [projectId]);
+  }, [initialized, userInfo, projectId]);
 
   const handleClick = (id: number) => {
     router.push(`/articles/${id}`);
@@ -71,7 +76,13 @@ const ProjectArticleContent = () => {
 
 const ProjectArticles = () => {
   return (
-    <Suspense fallback={<div>加载中...</div>}>
+    <Suspense
+      fallback={
+        <div>
+          <BeatLoader color="#3b82f6" size={10} />
+        </div>
+      }
+    >
       <ProjectArticleContent />
     </Suspense>
   );

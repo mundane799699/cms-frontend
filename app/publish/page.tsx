@@ -16,7 +16,7 @@ const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 
 const PublishPage = () => {
   const router = useRouter();
-  const { userInfo } = useUserInfo();
+  const { userInfo, initialized, initialize } = useUserInfo();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -27,6 +27,10 @@ const PublishPage = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   useEffect(() => {
+    if (!initialized) {
+      initialize();
+      return;
+    }
     if (!userInfo) {
       router.push("/login");
       return;
@@ -44,7 +48,8 @@ const PublishPage = () => {
         setProjects(data);
       }
     });
-  }, []);
+  }, [initialized, userInfo]);
+
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {

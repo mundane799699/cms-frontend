@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { Article } from "@/types/article";
-
+import { BeatLoader } from "react-spinners";
 import { NavigationHeader } from "@/components/NavigationHeader";
 
 const ArticlePage = () => {
@@ -53,7 +53,7 @@ const ArticlePage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <h1 className="text-2xl">加载中...</h1>
+        <BeatLoader color="#3b82f6" size={10} />
       </div>
     );
   }

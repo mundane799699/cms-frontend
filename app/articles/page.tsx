@@ -21,7 +21,7 @@ export default function AllArticles() {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
   );
-  const { userInfo } = useUserInfo();
+  const { userInfo, initialized, initialize } = useUserInfo();
 
   useEffect(() => {
     getArticleList(selectedCategoryId, null, 1).then((res: any) => {
@@ -33,6 +33,10 @@ export default function AllArticles() {
   }, [selectedCategoryId]);
 
   useEffect(() => {
+    if (!initialized) {
+      initialize();
+      return;
+    }
     if (!userInfo) {
       router.push("/login");
       return;
@@ -44,7 +48,7 @@ export default function AllArticles() {
         setCategories(data);
       }
     });
-  }, []);
+  }, [initialized, userInfo]);
 
   const handleCategoryChange = (categoryId: number | null) => {
     setSelectedCategoryId(categoryId);

@@ -12,8 +12,12 @@ const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 const FavoritesPage = () => {
   const router = useRouter();
   const [favoriteList, setFavoriteList] = useState([]);
-  const { userInfo } = useUserInfo();
+  const { userInfo, initialized, initialize } = useUserInfo();
   useEffect(() => {
+    if (!initialized) {
+      initialize();
+      return;
+    }
     if (!userInfo) {
       router.push("/login");
       return;
@@ -24,7 +28,7 @@ const FavoritesPage = () => {
         setFavoriteList(data);
       }
     });
-  }, []);
+  }, [initialized, userInfo]);
 
   const handleClick = (article: any) => {
     const { articleId } = article;

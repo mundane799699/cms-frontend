@@ -12,9 +12,13 @@ import { useUserInfo } from "@/hooks/useUserInfo";
 const HistoryPage = () => {
   const router = useRouter();
   const [history, setHistory] = useState<History[]>([]);
-  const { userInfo } = useUserInfo();
+  const { userInfo, initialized, initialize } = useUserInfo();
 
   useEffect(() => {
+    if (!initialized) {
+      initialize();
+      return;
+    }
     if (!userInfo) {
       router.push("/profile/login");
       return;
@@ -27,7 +31,7 @@ const HistoryPage = () => {
         console.error(msg);
       }
     });
-  }, []);
+  }, [initialized, userInfo]);
 
   return (
     <div className="h-full bg-white overflow-y-auto">

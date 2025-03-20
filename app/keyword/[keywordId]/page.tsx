@@ -18,7 +18,7 @@ import { NavigationHeader } from "@/components/NavigationHeader";
 const KeywordPage = () => {
   const { keywordId } = useParams();
   const router = useRouter();
-  const { userInfo } = useUserInfo();
+  const { userInfo, initialized, initialize } = useUserInfo();
   const [keyword, setKeyword] = useState({
     id: null,
     keywordContent: "",
@@ -30,6 +30,10 @@ const KeywordPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    if (!initialized) {
+      initialize();
+      return;
+    }
     if (!userInfo) {
       router.push("/login");
       return;
@@ -42,7 +46,7 @@ const KeywordPage = () => {
         console.error(msg);
       }
     });
-  }, []);
+  }, [initialized, userInfo]);
 
   const expandComment = () => {
     if (!userInfo) {

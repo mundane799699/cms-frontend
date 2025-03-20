@@ -16,7 +16,7 @@ import Comment from "@/components/Comment";
 import { MessageSquareMore } from "lucide-react";
 export default function Home() {
   const router = useRouter();
-  const { userInfo, setUserInfo } = useUserInfo();
+  const { userInfo, initialized, initialize } = useUserInfo();
   const [keyword, setKeyword] = useState({
     id: null,
     keywordContent: "",
@@ -27,6 +27,14 @@ export default function Home() {
   const [comments, setComments] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
+    if (!initialized) {
+      initialize();
+      return;
+    }
+    if (!userInfo) {
+      router.push("/login");
+      return;
+    }
     getKeyword().then((res: any) => {
       if (res.code === 200) {
         setKeyword(res.data);
@@ -34,21 +42,7 @@ export default function Home() {
         console.error(res.msg);
       }
     });
-
-    getInfo()
-      .then((res: any) => {
-        const { code, user } = res;
-        if (code === 200) {
-          setUserInfo(user);
-          console.log(user);
-        } else {
-          router.push("/login");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  }, [userInfo, initialized]);
 
   const expandComment = () => {
     if (!userInfo) {

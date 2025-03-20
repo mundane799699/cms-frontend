@@ -3,10 +3,11 @@ import { useParams, useRouter } from "next/navigation";
 import { getProjectArticleDetail } from "@/services/projectArticle";
 import { useEffect, useState } from "react";
 import { ProjectArticle } from "@/types/projectArticle";
-import { ChevronLeft, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import dayjs from "dayjs";
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { toggleArticleFavorite } from "@/services/favorite";
+import { BeatLoader } from "react-spinners";
 
 const ProjectArticlePage = () => {
   const { articleId } = useParams();
@@ -35,7 +36,7 @@ const ProjectArticlePage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <h1 className="text-2xl">加载中...</h1>
+        <BeatLoader color="#3b82f6" size={10} />
       </div>
     );
   }
