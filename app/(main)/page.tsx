@@ -14,6 +14,7 @@ import { getInfo } from "@/services/login";
 import Modal from "@/components/Modal";
 import { useRouter } from "next/navigation";
 import Comment from "@/components/Comment";
+import { MessageSquare, MessageSquareMore } from "lucide-react";
 export default function Home() {
   const router = useRouter();
   const { setUserInfo } = useUserInfo();
@@ -95,8 +96,8 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="rounded-2xl overflow-y-auto mt-8 bg-white flex-1 flex flex-col shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100">
-        <div className="relative h-52 flex-shrink-0">
+      <div className="relative rounded-2xl mt-8 bg-white flex flex-col shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100">
+        <div className="relative h-52 rounded-t-2xl overflow-hidden">
           <img
             src="/images/home_bg.jpg"
             alt="背景图片"
@@ -110,51 +111,52 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col overflow-y-auto">
-          <div className="flex justify-center items-center mt-8 flex-shrink-0">
-            <div className="text-5xl font-medium">{keyword.keywordContent}</div>
-          </div>
+        <div className="h-56 flex items-center justify-center">
+          <div className="text-5xl font-medium">{keyword.keywordContent}</div>
+        </div>
 
-          {showComment ? (
-            <div className="mt-8 space-y-6 mx-4 mb-4">
-              <div className="space-y-4">
-                <textarea
-                  className="w-full p-4 border rounded-lg resize-none focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  rows={4}
-                  placeholder="写下你的评论..."
-                  value={commentText}
-                  onChange={(e) => setCommentText(e.target.value)}
-                />
-                <div className="flex justify-end">
-                  <button
-                    className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
-                    onClick={handleSubmitComment}
-                  >
-                    发布评论
-                  </button>
-                </div>
-              </div>
+        {!showComment && (
+          <button
+            className="absolute bottom-0 right-0 m-4 text-gray-500 hover:text-gray-600 transition-colors"
+            onClick={expandComment}
+          >
+            <MessageSquareMore size={32} />
+          </button>
+        )}
+      </div>
 
-              <div className="space-y-4">
-                {comments.map((comment: any) => (
-                  <Comment
-                    key={comment.id}
-                    comment={comment}
-                    keywordId={keyword.id}
-                    onReply={expandComment}
-                  />
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="flex justify-end mt-8 mx-4 mb-4">
-              <button onClick={expandComment}>
-                <BsChatDots size={32} />
+      {showComment && (
+        <div className="mt-8 space-y-6 mx-1 mb-4">
+          <div className="space-y-4">
+            <textarea
+              className="w-full p-4 border rounded-lg resize-none focus:outline-none focus:ring-1 focus:ring-blue-500"
+              rows={4}
+              placeholder="写下你的评论..."
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+            />
+            <div className="flex justify-end">
+              <button
+                className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                onClick={handleSubmitComment}
+              >
+                发布评论
               </button>
             </div>
-          )}
+          </div>
+
+          <div className="space-y-4">
+            {comments.map((comment: any) => (
+              <Comment
+                key={comment.id}
+                comment={comment}
+                keywordId={keyword.id}
+                onReply={expandComment}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <Modal
         isOpen={isModalOpen}
