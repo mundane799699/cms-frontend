@@ -114,7 +114,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="h-96 flex items-center justify-center">
+        <div className="h-52 flex items-center justify-center">
           <div className="text-5xl font-medium">{keyword.keywordContent}</div>
         </div>
 
