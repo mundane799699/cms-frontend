@@ -7,26 +7,32 @@ import { redirect, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Settings } from "lucide-react";
 import toast from "react-hot-toast";
+import { useUserInfo } from "@/hooks/useUserInfo";
+import { BeatLoader, PulseLoader } from "react-spinners";
 const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 
 const Profile = () => {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const { userInfo, setUserInfo } = useUserInfo();
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [description, setDescription] = useState("");
 
   useEffect(() => {
+    if (userInfo) {
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     getInfo()
       .then((res: any) => {
         const { code, user } = res;
         if (code === 200) {
-          setUser(user);
+          setUserInfo(user);
           setDescription(user.description || "");
           console.log(user);
         } else {
-          router.push("/profile/login");
+          router.push("/login");
         }
       })
       .catch((err) => {
@@ -41,7 +47,7 @@ const Profile = () => {
     try {
       const res = (await updateDescription(description)) as any;
       if (res.code === 200) {
-        setUser({ ...user, description });
+        setUserInfo({ ...userInfo, description });
         setIsEditing(false);
       }
     } catch (error) {
@@ -52,7 +58,7 @@ const Profile = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <h1 className="text-4xl">加载中...</h1>
+        <BeatLoader color="#3b82f6" size={10} />
       </div>
     );
   }
@@ -61,7 +67,7 @@ const Profile = () => {
     <div className="flex flex-col items-center h-full p-8 bg-gray-50 relative">
       {/* 设置图标 */}
       <Link
-        href="/profile/settings"
+        href="/settings"
         className="absolute top-4 right-4 text-gray-600 hover:text-gray-900"
       >
         <Settings size={24} />
@@ -72,8 +78,8 @@ const Profile = () => {
         <div className="w-20 h-20 overflow-hidden mb-4 relative group rounded-md">
           <img
             src={
-              user?.avatar
-                ? `${baseImgUrl}${user?.avatar}`
+              userInfo?.avatar
+                ? `${baseImgUrl}${userInfo?.avatar}`
                 : "/images/default_avatar.jpg"
             }
             alt="用户头像"
@@ -90,7 +96,7 @@ const Profile = () => {
                   try {
                     const res = (await updateAvatar(file)) as any;
                     if (res.code === 200) {
-                      setUser({ ...user, avatar: res.imgUrl });
+                      setUserInfo({ ...userInfo, avatar: res.imgUrl });
                     } else {
                       toast("上传头像失败：" + res.msg);
                     }
@@ -104,7 +110,7 @@ const Profile = () => {
             <span className="text-white">更换头像</span>
           </label>
         </div>
-        <h1 className="text-xl font-bold mb-2">{user?.nickName}</h1>
+        <h1 className="text-xl font-bold mb-2">{userInfo?.nickName}</h1>
         {isEditing ? (
           <div className="flex flex-col items-center gap-2">
             <input
@@ -124,7 +130,7 @@ const Profile = () => {
               <button
                 onClick={() => {
                   setIsEditing(false);
-                  setDescription(user?.description || "");
+                  setDescription(userInfo?.description || "");
                 }}
                 className="px-4 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600"
               >
@@ -135,7 +141,7 @@ const Profile = () => {
         ) : (
           <div className="relative group">
             <p className="text-gray-600 text-center">
-              {user?.description || "这个人很懒，什么都没写"}
+              {userInfo?.description || "这个人很懒，什么都没写"}
             </p>
             <button
               onClick={() => setIsEditing(true)}

@@ -7,14 +7,20 @@ import { useEffect } from "react";
 import apiClient from "@/services/apiClient";
 import { useRouter } from "next/navigation";
 import { getMyPosts } from "@/services/article";
+import { useUserInfo } from "@/hooks/useUserInfo";
 
 const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 
 const MyPosts = () => {
   const router = useRouter();
   const [posts, setPosts] = useState([]);
+  const { userInfo } = useUserInfo();
 
   useEffect(() => {
+    if (!userInfo) {
+      router.push("/login");
+      return;
+    }
     getMyPosts().then((res: any) => {
       const { data, code } = res;
       if (code === 200) {

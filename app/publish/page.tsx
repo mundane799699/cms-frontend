@@ -11,10 +11,12 @@ import { Category } from "@/types/category";
 import { getArticleCategory, publishArticle } from "@/services/article";
 import { Project } from "@/types/project";
 import { getProjectList } from "@/services/project";
+import { useUserInfo } from "@/hooks/useUserInfo";
 const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 
 const PublishPage = () => {
   const router = useRouter();
+  const { userInfo } = useUserInfo();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -25,6 +27,10 @@ const PublishPage = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   useEffect(() => {
+    if (!userInfo) {
+      router.push("/login");
+      return;
+    }
     getArticleCategory().then((res: any) => {
       const { data, code, msg } = res;
       if (code === 200) {

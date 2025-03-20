@@ -4,16 +4,18 @@ import { NavigationHeader } from "@/components/NavigationHeader";
 import { useRouter } from "next/navigation";
 import { logout } from "@/services/login";
 import { removeToken } from "@/utils/user-token";
+import { useUserInfo } from "@/hooks/useUserInfo";
 
 const SettingsPage = () => {
   const router = useRouter();
-
+  const { userInfo, setUserInfo } = useUserInfo();
   const handleLogout = () => {
     logout().then((res: any) => {
       const { code } = res;
       if (code === 200) {
         removeToken();
-        router.push("/profile/login");
+        setUserInfo(null);
+        router.push("/login");
       }
     });
   };

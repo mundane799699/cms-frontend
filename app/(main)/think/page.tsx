@@ -7,14 +7,20 @@ import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useArticleStore } from "@/hooks/articleStore";
+import { useUserInfo } from "@/hooks/useUserInfo";
 const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 
 const Think = () => {
   const router = useRouter();
   const { articles, currentArticle, setArticles, setCurrentArticle } =
     useArticleStore();
+  const { userInfo } = useUserInfo();
 
   useEffect(() => {
+    if (!userInfo) {
+      router.push("/login");
+      return;
+    }
     if (articles.length === 0) {
       getArticleList(null, null, 1).then((res: any) => {
         const { data, code } = res;

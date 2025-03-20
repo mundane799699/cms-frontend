@@ -6,12 +6,18 @@ import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useUserInfo } from "@/hooks/useUserInfo";
 const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 
 const FavoritesPage = () => {
   const router = useRouter();
   const [favoriteList, setFavoriteList] = useState([]);
+  const { userInfo } = useUserInfo();
   useEffect(() => {
+    if (!userInfo) {
+      router.push("/login");
+      return;
+    }
     getFavoriteList().then((res: any) => {
       const { data, code } = res;
       if (code === 200) {

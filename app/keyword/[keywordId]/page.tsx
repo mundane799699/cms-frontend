@@ -30,6 +30,10 @@ const KeywordPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    if (!userInfo) {
+      router.push("/login");
+      return;
+    }
     getKeywordDetail(Number(keywordId)).then((res: any) => {
       const { code, data, msg } = res;
       if (code === 200) {

@@ -7,12 +7,18 @@ import { useEffect, useState } from "react";
 import { History } from "@/types/HistoryType";
 import dayjs from "dayjs";
 import { NavigationHeader } from "@/components/NavigationHeader";
+import { useUserInfo } from "@/hooks/useUserInfo";
 
 const HistoryPage = () => {
   const router = useRouter();
   const [history, setHistory] = useState<History[]>([]);
+  const { userInfo } = useUserInfo();
 
   useEffect(() => {
+    if (!userInfo) {
+      router.push("/profile/login");
+      return;
+    }
     getHistory().then((res: any) => {
       const { code, data, msg } = res;
       if (code === 200) {

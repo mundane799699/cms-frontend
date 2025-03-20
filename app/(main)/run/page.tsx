@@ -4,13 +4,20 @@ import { getProjectList } from "@/services/project";
 import { useEffect, useState } from "react";
 import { Project } from "@/types/project";
 import { useRouter } from "next/navigation";
+import { useUserInfo } from "@/hooks/useUserInfo";
 const baseImgUrl = process.env.NEXT_PUBLIC_APP_BASE_API;
 
 const Run = () => {
   const router = useRouter();
   const [projects, setProjects] = useState<Project[]>([]);
+  const { userInfo } = useUserInfo();
 
   useEffect(() => {
+    if (!userInfo) {
+      router.push("/login");
+      return;
+    }
+
     getProjectList().then((res: any) => {
       const { data, code } = res;
       if (code === 200) {
@@ -22,6 +29,7 @@ const Run = () => {
   const handleClick = (id: number) => {
     router.push(`/projectArticles?projectId=${id}`);
   };
+
   return (
     <div className="flex flex-col p-6 h-full overflow-y-auto space-y-4 bg-gray-50">
       {projects.map((project) => (

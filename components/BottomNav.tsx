@@ -12,7 +12,7 @@ import {
 const navItems = [
   {
     name: "破茧",
-    paths: ["/", "/history"],
+    paths: ["/home", "/history"],
     icon: <PiButterfly className="w-6 h-6 mb-1" />,
   },
   {
@@ -27,7 +27,7 @@ const navItems = [
   },
   {
     name: "我的",
-    paths: ["/profile", "/profile/login", "/profile/settings"],
+    paths: ["/profile", "/login", "/settings"],
     icon: <PiUserCircle className="w-6 h-6 mb-1" />,
   },
 ];

@@ -9,14 +9,20 @@ import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
 import { NavigationHeader } from "@/components/NavigationHeader";
 import { getArticleList } from "@/services/article";
+import { useUserInfo } from "@/hooks/useUserInfo";
 
 const ProjectArticleContent = () => {
   const searchParams = useSearchParams();
   const projectId = searchParams.get("projectId");
   const router = useRouter();
   const [articleList, setArticleList] = useState<ProjectArticle[]>([]);
+  const { userInfo } = useUserInfo();
 
   useEffect(() => {
+    if (!userInfo) {
+      router.push("/login");
+      return;
+    }
     getArticleList(null, Number(projectId), 2).then((res: any) => {
       const { code, data, msg } = res;
       if (code === 200) {
