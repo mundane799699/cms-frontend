@@ -1,4 +1,4 @@
-import apiClient from "./apiClient";
+import apiClient from "@/services/apiClient";
 
 export const login = (data: any) => {
   return apiClient.post("/login", data, {

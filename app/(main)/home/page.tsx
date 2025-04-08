@@ -85,41 +85,57 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto p-8 bg-gray-50">
-      <div className="flex justify-between items-center">
-        <div className="text-lg">今日关键词</div>
-        <Link href="/history" className="bg-gray-200 px-4 py-1 rounded">
-          历史记录
-        </Link>
-      </div>
-
-      <div className="relative rounded-2xl mt-8 bg-white flex flex-col shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100">
-        <div className="relative h-52 rounded-t-2xl overflow-hidden">
-          <img
-            src="/images/home_bg.jpg"
-            alt="背景图片"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/30" />
-          <div className="absolute bottom-0 right-0 text-white p-2">
-            {keyword.publishDate
-              ? dayjs(keyword.publishDate).format("YYYY年MM月DD日")
-              : ""}
-          </div>
-        </div>
-
-        <div className="h-52 flex items-center justify-center">
-          <div className="text-5xl font-medium">{keyword.keywordContent}</div>
-        </div>
-
-        {!showComment && (
-          <button
-            className="absolute bottom-0 right-0 m-4 text-gray-500 hover:text-gray-600 transition-colors"
-            onClick={expandComment}
+    <div className="h-full p-8 overflow-y-auto bg-gray-50">
+      <div className="h-full flex flex-col">
+        <div className="flex justify-between items-center">
+          <div className="text-lg">今日关键词</div>
+          <Link
+            href="/history"
+            className="border border-gray-900 px-4 py-1 rounded-full hover:bg-gray-300 transition-colors"
           >
-            <MessageSquareMore size={32} />
-          </button>
-        )}
+            历史记录
+          </Link>
+        </div>
+
+        <div className="flex-1 rounded-2xl mt-8 bg-white flex flex-col shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100">
+          <div className="relative h-52 rounded-t-2xl overflow-hidden">
+            <img
+              src="/images/home_bg.jpg"
+              alt="背景图片"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/30" />
+            <div className="absolute bottom-0 right-0 text-white p-2">
+              {keyword.publishDate
+                ? dayjs(keyword.publishDate).format("YYYY年MM月DD日")
+                : ""}
+            </div>
+          </div>
+
+          <div className="h-52 flex items-center justify-center">
+            <div className="text-5xl font-medium">{keyword.keywordContent}</div>
+          </div>
+
+          {!showComment && (
+            <button
+              className="absolute bottom-24 right-10 m-4 text-gray-500 hover:text-gray-600 transition-colors"
+              onClick={expandComment}
+            >
+              <MessageSquareMore size={32} />
+            </button>
+          )}
+        </div>
+
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={() => {
+            setIsModalOpen(false);
+            router.push("/login");
+          }}
+          title="提示"
+          content="请先登录"
+        />
       </div>
 
       {showComment && (
@@ -154,17 +170,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={() => {
-          setIsModalOpen(false);
-          router.push("/login");
-        }}
-        title="提示"
-        content="请先登录"
-      />
     </div>
   );
 }
