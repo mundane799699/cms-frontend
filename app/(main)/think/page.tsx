@@ -63,11 +63,11 @@ const Think = () => {
           router.push(`/articles/${currentArticle.id}`);
         }}
       >
-        <div className="mb-4">
+        <div className="mb-2">
           {dayjs(currentArticle.publishDate).format("YYYY年MM月DD日")}
         </div>
         {currentArticle.coverImage && (
-          <div className="relative w-full h-48 mb-4">
+          <div className="w-full aspect-[3/1] mb-2">
             <img
               src={`${baseImgUrl}${currentArticle.coverImage}`}
               alt={currentArticle.title}
