@@ -5,7 +5,7 @@ import {
   getKeywordComment,
   postKeywordComment,
 } from "@/services/keyword";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useUserInfo } from "@/hooks/useUserInfo";
@@ -14,14 +14,18 @@ import Modal from "@/components/Modal";
 import { useRouter } from "next/navigation";
 import Comment from "@/components/Comment";
 import { MessageSquareMore } from "lucide-react";
+import { BeatLoader } from "react-spinners";
+interface Keyword {
+  id: number;
+  keywordContent: string;
+  publishDate: string;
+}
+
 export default function Home() {
   const router = useRouter();
   const { userInfo, initialized, initialize } = useUserInfo();
-  const [keyword, setKeyword] = useState({
-    id: null,
-    keywordContent: "",
-    publishDate: "",
-  });
+  const commentSectionRef = useRef<HTMLDivElement>(null);
+  const [keyword, setKeyword] = useState<Keyword | null>(null);
   const [showComment, setShowComment] = useState(false);
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState([]);
@@ -36,10 +40,11 @@ export default function Home() {
       return;
     }
     getKeyword().then((res: any) => {
-      if (res.code === 200) {
-        setKeyword(res.data);
+      const { code, data, msg } = res;
+      if (code === 200) {
+        setKeyword(data);
       } else {
-        console.error(res.msg);
+        console.error(msg);
       }
     });
   }, [userInfo, initialized]);
@@ -50,39 +55,44 @@ export default function Home() {
       setIsModalOpen(true);
       return;
     }
-    if (keyword.id) {
-      getKeywordComment(keyword.id).then((res: any) => {
-        const { code, data, msg } = res;
-        if (code === 200) {
-          setComments(data);
-          setShowComment(true);
-        } else {
-          console.error(msg);
-        }
-      });
-    }
+
+    getKeywordComment(keyword!.id).then((res: any) => {
+      const { code, data, msg } = res;
+      if (code === 200) {
+        setComments(data);
+        setShowComment(true);
+      } else {
+        console.error(msg);
+      }
+    });
   };
 
   const handleSubmitComment = () => {
     if (!commentText.trim()) return;
-    if (keyword.id && userInfo) {
-      postKeywordComment(
-        keyword.id,
-        commentText,
-        userInfo.userId,
-        null,
-        null
-      ).then((res: any) => {
-        const { code, msg } = res;
-        if (code === 200) {
-          setCommentText("");
-          expandComment();
-        } else {
-          console.error(msg);
-        }
-      });
-    }
+    postKeywordComment(
+      keyword!.id,
+      commentText,
+      userInfo.userId,
+      null,
+      null
+    ).then((res: any) => {
+      const { code, msg } = res;
+      if (code === 200) {
+        setCommentText("");
+        expandComment();
+      } else {
+        console.error(msg);
+      }
+    });
   };
+
+  if (!keyword) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <BeatLoader color="#3b82f6" size={10} />
+      </div>
+    );
+  }
 
   return (
     <div className="h-full p-8 overflow-y-auto bg-gray-50">
@@ -113,13 +123,24 @@ export default function Home() {
           </div>
 
           <div className="h-52 flex items-center justify-center">
-            <div className="text-5xl font-medium">{keyword.keywordContent}</div>
+            <div className="text-5xl font-medium">
+              {keyword?.keywordContent}
+            </div>
           </div>
 
           {!showComment && (
             <button
               className="absolute bottom-24 right-10 m-4 text-gray-500 hover:text-gray-600 transition-colors"
-              onClick={expandComment}
+              onClick={() => {
+                expandComment();
+                setTimeout(() => {
+                  if (commentSectionRef.current) {
+                    commentSectionRef.current.scrollIntoView({
+                      behavior: "smooth",
+                    });
+                  }
+                }, 100);
+              }}
             >
               <MessageSquareMore size={32} />
             </button>
@@ -139,7 +160,7 @@ export default function Home() {
       </div>
 
       {showComment && (
-        <div className="mt-8 space-y-6 mx-1 mb-4">
+        <div ref={commentSectionRef} className="mt-8 space-y-6 mx-1 mb-4">
           <div className="space-y-4">
             <textarea
               className="w-full p-4 border rounded-lg resize-none focus:outline-none focus:ring-1 focus:ring-blue-500"
