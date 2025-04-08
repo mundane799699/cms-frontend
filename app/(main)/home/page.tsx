@@ -61,6 +61,13 @@ export default function Home() {
       if (code === 200) {
         setComments(data);
         setShowComment(true);
+        setTimeout(() => {
+          if (commentSectionRef.current) {
+            commentSectionRef.current.scrollIntoView({
+              behavior: "smooth",
+            });
+          }
+        }, 100);
       } else {
         console.error(msg);
       }
@@ -133,13 +140,6 @@ export default function Home() {
               className="absolute bottom-24 right-10 m-4 text-gray-500 hover:text-gray-600 transition-colors"
               onClick={() => {
                 expandComment();
-                setTimeout(() => {
-                  if (commentSectionRef.current) {
-                    commentSectionRef.current.scrollIntoView({
-                      behavior: "smooth",
-                    });
-                  }
-                }, 100);
               }}
             >
               <MessageSquareMore size={32} />
